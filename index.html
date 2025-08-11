@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign In / Sign Up — Example</title>
+  <style>
+    :root{--bg:#f3f4f6;--card:#fff;--accent:#2563eb;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:linear-gradient(180deg,#eef2ff 0%,var(--bg) 100%)}
+    .card{background:var(--card);width:100%;max-width:920px;border-radius:12px;box-shadow:0 8px 30px rgba(8,15,30,0.08);display:grid;grid-template-columns:1fr 420px;overflow:hidden}
+    .left{padding:40px;background:linear-gradient(180deg,rgba(37,99,235,0.08),transparent);}
+    .brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+    .logo{width:44px;height:44px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    h1{margin:0;font-size:20px}
+    p.lead{color:var(--muted);margin-top:8px}
+    ul.features{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+    ul.features li{display:flex;gap:12px;align-items:flex-start;color:var(--muted)}
+    .right{padding:32px;background:var(--card);}
+    .form-wrap{max-width:360px;margin:0 auto}
+    .tabs{display:flex;gap:8px;margin-bottom:18px}
+    .tabs button{flex:1;padding:10px;border-radius:8px;border:1px solid transparent;background:transparent;cursor:pointer}
+    .tabs button.active{background:var(--accent);color:#fff}
+    form{display:grid;gap:12px}
+    label{font-size:13px;color:var(--muted)}
+    input,select{padding:10px 12px;border-radius:8px;border:1px solid #e6e9ef;font-size:14px}
+    .row{display:flex;gap:10px}
+    .btn{padding:12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+    .btn.primary{background:var(--accent);color:#fff}
+    .muted{font-size:13px;color:var(--muted);text-align:center}
+    .small{font-size:12px;color:var(--muted)}
+    .error{color:#b91c1c;font-size:13px}
+    @media (max-width:880px){.card{grid-template-columns:1fr;max-width:420px}.left{display:none}}
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <div class="left" aria-hidden="true">
+      <div class="brand">
+        <div class="logo">VA</div>
+        <div>
+          <h1>Vaaltic CRM (Demo)</h1>
+          <p class="lead">Sign in to manage leads, deals and contacts — or create a new account.</p>
+        </div>
+      </div>
+      <ul class="features">
+        <li>• Lead & contact management</li>
+        <li>• Role-based access: Admin / Salesman</li>
+        <li>• Simple, secure authentication (replace with your backend)</li>
+      </ul>
+    </div>
+
+    <div class="right" aria-labelledby="signin-title">
+      <div class="form-wrap">
+        <div class="tabs" role="tablist" aria-label="Sign in or Sign up">
+          <button id="tab-signin" class="active" role="tab" aria-selected="true">Sign In</button>
+          <button id="tab-signup" role="tab" aria-selected="false">Sign Up</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <form id="form-signin" autocomplete="on">
+          <h2 id="signin-title">Sign in to your account</h2>
+          <div>
+            <label for="signin-email">Email</label>
+            <input id="signin-email" type="email" required placeholder="you@example.com" />
+          </div>
+          <div>
+            <label for="signin-password">Password</label>
+            <input id="signin-password" type="password" required placeholder="Enter password" minlength="6" />
+          </div>
+          <div class="row" style="align-items:center;justify-content:space-between;">
+            <div class="small"><label><input type="checkbox" id="remember"/> Remember me</label></div>
+            <a href="#" class="small">Forgot password?</a>
+          </div>
+          <div>
+            <button type="submit" class="btn primary">Sign In</button>
+          </div>
+          <div id="signin-msg" class="muted small">Or use your company SSO (not implemented here).</div>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="form-signup" style="display:none;" autocomplete="on">
+          <h2>Create a new account</h2>
+          <div>
+            <label for="signup-name">Full name</label>
+            <input id="signup-name" type="text" required placeholder="John Doe" />
+          </div>
+          <div>
+            <label for="signup-email">Email</label>
+            <input id="signup-email" type="email" required placeholder="you@example.com" />
+          </div>
+          <div class="row">
+            <div style="flex:1">
+              <label for="signup-password">Password</label>
+              <input id="signup-password" type="password" required minlength="6" placeholder="Choose a password" />
+            </div>
+            <div style="flex:1">
+              <label for="signup-password2">Confirm</label>
+              <input id="signup-password2" type="password" required minlength="6" placeholder="Confirm password" />
+            </div>
+          </div>
+          <div>
+            <label for="role">Role</label>
+            <select id="role" required>
+              <option value="salesman">Salesman</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div>
+            <button type="submit" class="btn primary">Create account</button>
+          </div>
+          <div id="signup-msg" class="muted small">By creating an account you agree to our terms.</div>
+        </form>
+
+        <div style="height:12px"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple tab switching
+    const tabSignIn = document.getElementById('tab-signin');
+    const tabSignUp = document.getElementById('tab-signup');
+    const formSignIn = document.getElementById('form-signin');
+    const formSignUp = document.getElementById('form-signup');
+
+    function switchTo(signup){
+      if(signup){
+        tabSignUp.classList.add('active'); tabSignUp.setAttribute('aria-selected','true');
+        tabSignIn.classList.remove('active'); tabSignIn.setAttribute('aria-selected','false');
+        formSignIn.style.display='none'; formSignUp.style.display='grid';
+      }else{
+        tabSignIn.classList.add('active'); tabSignIn.setAttribute('aria-selected','true');
+        tabSignUp.classList.remove('active'); tabSignUp.setAttribute('aria-selected','false');
+        formSignUp.style.display='none'; formSignIn.style.display='grid';
+      }
+    }
+
+    tabSignIn.addEventListener('click',()=>switchTo(false));
+    tabSignUp.addEventListener('click',()=>switchTo(true));
+
+    // Handle sign-in (replace with real backend / Firebase integration)
+    formSignIn.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value.trim();
+      const password = document.getElementById('signin-password').value;
+      // TODO: send to your server / Firebase Auth
+      console.log('SIGN IN', {email, password});
+      alert('Sign in submitted (see console). Replace this with real auth integration.');
+    });
+
+    // Handle sign-up with simple validation
+    formSignUp.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const p1 = document.getElementById('signup-password').value;
+      const p2 = document.getElementById('signup-password2').value;
+      const role = document.getElementById('role').value;
+
+      if(p1 !== p2){
+        alert('Passwords do not match');
+        return;
+      }
+      if(p1.length < 6){
+        alert('Password must be at least 6 characters');
+        return;
+      }
+      // Example payload to send to backend / Firebase
+      const payload = {name, email, password: p1, role};
+      console.log('SIGN UP', payload);
+      alert('Sign up submitted (see console). Replace this with real registration call.');
+    });
+  </script>
+</body>
+</html>
